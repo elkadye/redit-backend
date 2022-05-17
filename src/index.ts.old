@@ -1,0 +1,57 @@
+import { createConnection } from "typeorm";
+import express, { application } from "express";
+
+import {createClientsRouter} from "./routes/create_client"
+import { createBankerRouter } from "./routes/create_banker";
+import { createUserRouter } from "./routes/create_user";
+import { createPostRouter } from "./routes/create_post";
+import { getAllPostsRouter } from "./routes/get_posts";
+import { get_UserPosts_Router } from "./routes/get_user_posts";
+import { get_users_Router } from "./routes/get_users";
+import { createCommentRouter } from "./routes/create_comment";
+import { get_Post_Router } from "./routes/get_post_byID";
+
+import { User } from "./entities/user";
+import { Post } from "./entities/post";
+import {Client} from "./entities/client"
+import { Banker } from "./entities/banker";
+import { Transaction } from "./entities/transaction";
+import { Comment } from "./entities/comment";
+
+const app = express();
+
+const main = async () => {
+  try{
+     await createConnection({
+        type: "postgres",
+        host: "db.nflljphmdwweruahgect.supabase.co",
+        port: 5432,
+        username: "postgres",
+        password: "KAW5fgDqWbdd2Qe",
+        database: "postgres",
+        entities: [User, Post, Client, Banker, Transaction, Comment],
+        synchronize: true
+      });
+      console.log("connected to DB!")
+      app.use(express.json())
+      app.use(
+        createUserRouter,
+        createPostRouter,
+        getAllPostsRouter,
+        get_UserPosts_Router,
+        get_users_Router,
+        createCommentRouter,
+        createClientsRouter,
+        createBankerRouter,
+        get_Post_Router
+      );
+      app.listen(8080, () => {
+          console.log("App now running on port 8080")
+      });
+
+  } catch(error) {
+      console.log(error)
+  }
+};
+
+main()
