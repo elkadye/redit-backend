@@ -1,21 +1,21 @@
 import {
   Entity,
   Column,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
-  OneToMany
+  OneToMany,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { emBase } from "./util/emBase";
 import { User } from "./user";
 import {Comment} from "./comment"
+import { Vote } from "./vote";
+import { Tag } from "./tag";
 
 
 
-@Entity()
+
+@Entity("redit_posts")
 export class Post extends emBase {
   @Column()
   title: string;
@@ -28,5 +28,12 @@ export class Post extends emBase {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: Vote[];
+  
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  tags: Tag[];
 }
 

@@ -1,21 +1,19 @@
 import {
   Entity,
   Column,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
-  JoinColumn
+  JoinTable,
+  ManyToMany
 } from "typeorm";
 import { User } from "./user";
 import { Post } from "./post";
 
 import {emBase} from "./util/emBase"
+import { Tag } from "./tag";
 
 
 
-@Entity()
+@Entity("redit_comments")
 export class Comment extends emBase {
   @Column()
   body: string;
@@ -25,5 +23,7 @@ export class Comment extends emBase {
 
   @ManyToOne(() => Post, (post) => post.comments, { nullable: false })
   post: Post;
+
+ 
 }
 

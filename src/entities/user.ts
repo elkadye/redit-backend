@@ -2,17 +2,14 @@ import {
   OneToMany,
   Entity,
   Column,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
 } from "typeorm";
 import { Post } from "./post";
 import { Comment } from "./comment";
 
 import { emBase } from "./util/emBase";
+import { Vote } from "./vote";
 
-@Entity()
+@Entity("redit_users")
 export class User extends emBase {
   @Column()
   firstName: string;
@@ -25,9 +22,14 @@ export class User extends emBase {
   })
   email: string;
 
+  @Column({nullable: true})
+ avatarUrl: string;
+
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: Vote[];
 }
