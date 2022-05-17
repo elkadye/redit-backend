@@ -4,6 +4,7 @@ import express, { json, urlencoded } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import AppDataSource from "./data-source";
+import { CommentRouter } from "./routes/comments";
 import { PostRouter } from "./routes/posts";
 import { UserRouter } from "./routes/users";
 
@@ -33,3 +34,4 @@ app.get("/", function (req, res) {
 
 app.use("/user", UserRouter);
 app.use("/post", PostRouter);
+app.use("/comment", CommentRouter);
