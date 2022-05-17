@@ -22,6 +22,10 @@ export class Post extends emBase {
 
   @Column()
   body: string;
+  
+  @Column()
+  imageUrl:string
+
 
   @ManyToOne(() => User, (user) => user.posts, { nullable: false })
   user: User;
@@ -31,7 +35,7 @@ export class Post extends emBase {
 
   @OneToMany(() => Vote, (vote) => vote.user)
   votes: Vote[];
-  
+
   @ManyToMany(() => Tag)
   @JoinTable()
   tags: Tag[];
