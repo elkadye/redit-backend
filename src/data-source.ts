@@ -1,6 +1,11 @@
 
 import { config } from "dotenv";
 import { DataSource } from "typeorm";
+import { Comment } from "./entities/comment";
+import { Post } from "./entities/post";
+import { Tag } from "./entities/tag";
+import { User } from "./entities/user";
+import { Vote } from "./entities/vote";
 
 config()
 export const AppDataSource = new DataSource({
@@ -10,9 +15,9 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: false,
+  synchronize: true,
   logging: false,
-  entities: [],
+  entities: [Comment,Post, Tag, User, Vote],
   migrations: [],
   subscribers: [],
 });

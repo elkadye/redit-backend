@@ -4,6 +4,7 @@ import express, { json, urlencoded } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import AppDataSource from "./data-source";
+import { UserRouter } from "./routes/users";
 
 dotenv.config();
 // console.log(process.env)
@@ -28,3 +29,5 @@ app.listen(process.env.PORT || 8081, async () => {
 app.get("/", function (req, res) {
   res.send("Server is running");
 });
+
+app.use("/user", UserRouter);

@@ -22,8 +22,11 @@ export class User extends emBase {
   })
   email: string;
 
-  @Column({nullable: true})
- avatarUrl: string;
+  @Column({ nullable: true })
+  avatarUrl: string;
+
+  @Column()
+  password: string;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];

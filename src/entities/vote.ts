@@ -8,7 +8,7 @@ import { Post } from "./post";
 import { emBase } from "./util/emBase";
 import { User } from "./user";
 
-@Entity("redit_tags")
+@Entity("redit_votes")
 export class Vote extends emBase {
   @Column()
   userVote: number;
