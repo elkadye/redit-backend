@@ -33,5 +33,5 @@ app.get("/", function (req, res) {
 });
 
 app.use("/user", UserRouter);
-app.use("/post", PostRouter);
+app.use("/posts", PostRouter);
 app.use("/comment", CommentRouter);

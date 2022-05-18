@@ -26,11 +26,57 @@ router.post("/new", async (req, res) => {
   }
 });
 
+//get all posts
+
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find({
+      relations: {
+        user: true,
+        // comments: { user:{id:true} },
+        comments: { user:true },
+        votes: { user: true },
+        tags: true
+      },
+    });
+    if (!posts) {
+      return res.status(404).json({ msg: "post doesn't exist" });
+    }
+
+    return res.json(posts);
+  } catch {
+    return res.status(404).json({ msg: "something went wrong"});
+  }
+});
+
+//get post by id
+router.get("/:postId", async (req, res) => {
+  try {
+      const {postId} = req.params
+    const posts = await Post.find({
+      where: { id: +postId },
+      relations: {
+        user: true,
+        comments: { user: true },
+        votes: { user: true },
+        tags: true,
+      },
+    });
+    if (!posts) {
+      return res.status(404).json({ msg: "post doesn't exist" });
+    }
+
+    return res.json(posts);
+  } catch {
+    return res.status(404);
+  }
+});
+
+//delete post
 //Get post for user
 
 export { router as PostRouter };
 
 
-//get all posts
-//get post by id
-//delete post
+
+

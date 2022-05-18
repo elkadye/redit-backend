@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
-import { Post } from "../entity/post";
+import { Post } from "../entities/post";
 
 /**
  * Loads all posts from the database.
