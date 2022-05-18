@@ -73,7 +73,9 @@ router.get("/:postId", async (req, res) => {
 });
 
 //delete post
-//Get post for user
+
+
+
 
 export { router as PostRouter };
 

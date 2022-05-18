@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import { User } from "../entities/user";
+import { Post } from "../entities/post";
 const router = express.Router();
 
 
@@ -34,6 +35,31 @@ router.post("/signUp", async (req, res) => {
 
 
 //Get post for user
+router.get("/posts", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findOne({ where: [{ id: +userId }] });
+    if (!user) {
+      return res.status(400).json({
+        message: "User does not exist",
+      });
+    }
+    const posts = await Post.find({
+      where: { user:{id: +userId} },
+      relations: {
+        comments: { user: true },
+        votes: { user: true },
+        tags: true,
+      },
+    });
+    if (!posts) {
+      return res.status(404).json({ msg: "This user has no posts yet" });
+    }
+    return res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
 
 export { router as UserRouter };
 
