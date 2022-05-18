@@ -62,8 +62,8 @@ router.get("/:postId", async (req, res) => {
         tags: true,
       },
     });
-    if (!posts) {
-      return res.status(404).json({ msg: "post doesn't exist" });
+    if (posts.length===0) {
+      return res.status(400).json({ msg: "post doesn't exist" });
     }
 
     return res.json(posts);
