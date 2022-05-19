@@ -44,7 +44,37 @@ router.post("/new", async (req, res) => {
   }
 });
 
+//get comments for post
+
+router.get("/post/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    // const post = await Post.find({
+    //   where: { user: { id: +postId } },
+    //   relations: {
+    //     comments: { user: true },
+    //   },
+    // });
+    // if (!post) {
+    //   return res.status(400).json({
+    //     message: "Post does not exist",
+    //   });
+    // }
+    const comments = await Comment.find({
+      where: { post: { id: +postId } },
+    });
+
+    if (!comments) {
+      return res.status(400).json({ msg: "This post has no comments yet" });
+    }
+    return res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
+
 export { router as CommentRouter };
 
-//get comments for post
+
 //delete comment

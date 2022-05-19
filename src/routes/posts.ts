@@ -73,7 +73,19 @@ router.get("/:postId", async (req, res) => {
 });
 
 //delete post
-
+router.delete("/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await Post.findOneBy({id: +postId })
+    if (!post) {
+      return res.status(400).json({ msg: "post doesn't exist" });
+    }
+await Post.remove(post)
+  return res.status(200).json({ msg: "post deleted successfully" });
+  }catch {
+    return res.status(404).json({ msg: "something went wrong"});
+  }
+})
 
 
 
